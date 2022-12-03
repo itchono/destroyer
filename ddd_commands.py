@@ -6,9 +6,11 @@ from naff import (
     ComponentContext,
     Extension, InteractionContext,
     component_callback, slash_command,
+    File
 )
 from collections import defaultdict
 from db_driver import get_events, log_event
+from plot_generator import generate_leaderboard_plot
 import os
 
 
@@ -92,6 +94,14 @@ class DDDExtension(Extension):
         embed.description = msg
 
         await ctx.send(embed=embed)
+
+    @slash_command(name="graph", description="Shows the nut graph.")
+    async def graph(self, ctx: InteractionContext):
+        image_file = generate_leaderboard_plot(self.bot.guilds[0])
+
+        uploaded_file = File(image_file, file_name="leaderboard.png")
+        
+        await ctx.send(file=uploaded_file)
 
 
 def setup(bot: Client):

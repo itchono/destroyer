@@ -13,11 +13,14 @@ if __name__ == "__main__":
     # initialize the database
     initialize_db()
 
+    intents_num = Intents.DEFAULT | Intents.GUILDS | Intents.GUILD_MEMBERS
+
     # create our bot instance
     bot = Client(
-        intents=Intents.DEFAULT,  # intents are what events we want to receive from discord, `DEFAULT` is usually fine
+        intents=intents_num,
         auto_defer=True,  # automatically deferring interactions
         activity="Destroying your D",  # the status message of the bot
+        fetch_members=True
     )
 
     bot.load_extension("ddd_commands")  # load the extension we made earlier
