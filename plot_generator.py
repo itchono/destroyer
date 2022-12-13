@@ -71,7 +71,8 @@ def generate_leaderboard_plot(guild: Guild) -> BytesIO:
         for i in range(len(timestamps)):
             cum_nuts.append(i)
 
-        ax.plot(timestamps, cum_nuts, 'o-', label=user_id)
+        # Plot using post-steps
+        ax.step(timestamps, cum_nuts, 'o-', where="post")
 
         # Add profile picture to the plot on the last nut
         imagebox = OffsetImage(user_avatars[user_id], zoom=0.2)
